@@ -1,0 +1,35 @@
+#!/usr/bin/env ruby
+
+require 'bundler/inline'
+gemfile do
+  source 'https://rubygems.org'
+  gem 'playwright-cli', require: 'playwright/cli'
+end
+
+module Notes
+  module CLI
+    module Commands
+      extend Playwright::CLI::Registry
+
+      class Root < Playwright::CLI::Command
+        desc "Says a greeting to the name given. This is an example."
+
+        argument :name, required: true, desc: 'Whom shall I greet?'
+
+        example [
+          "\"Johnny Boy\" #=> Why, hello Johnny Boy!"
+        ]
+
+        def call(name:, **)
+          display.print "Why, hello #{name}!"
+        end
+
+      end
+
+      register_root Root
+
+    end
+  end
+end
+
+Playwright::CLI.new(Notes::CLI::Commands).call
