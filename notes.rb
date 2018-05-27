@@ -4,8 +4,6 @@ require 'bundler/inline'
 gemfile do
   source 'https://rubygems.org'
   gem 'playwright-cli', require: 'playwright/cli'
-  gem 'git', '~> 1.3'
-  gem 'pry-nav'
 end
 
 require 'fileutils'
@@ -28,12 +26,12 @@ module Notes
           open_notes_file
         end
 
-        def git
-          @git ||= Git.open(Dir.pwd) if Dir.exists?(File.join(Dir.pwd, '.git'))
+        def git_branch
+          @git_branch ||= `git rev-parse --abbrev-ref HEAD`.chomp if git?
         end
 
         def git?
-          !!git
+          Dir.exists?(File.join(Dir.pwd, '.git'))
         end
 
         def notes_file
@@ -41,7 +39,7 @@ module Notes
         end
 
         def notes_filename
-          "#{NOTES_FILE_NAME_ROOT}-#{git.branch if git?}"
+          "#{NOTES_FILE_NAME_ROOT}-#{git_branch if git?}.md"
         end
 
         def gitignore_file
@@ -50,7 +48,7 @@ module Notes
 
         def create_notes_file
           FileUtils.touch(notes_file)
-          notes_file.write("#{git.branch.name}\n\n")
+          notes_file.write("#{git_branch}\n\n")
         end
 
         def open_notes_file
