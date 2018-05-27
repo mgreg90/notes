@@ -1,7 +1,18 @@
 # notes
 
 notes is a [playwright-cli](https://github.com/mgreg90/playwright-cli) script.
-ADD DESCRIPTION HERE
+
+Notes is a simple cli for writing notes on the current feature you're working
+on. After creating a feature branch, just run:
+
+```shell
+$ notes
+```
+
+It'll create a branch-specific markdown file for you to keep notes in. Just run
+the command whenever you want to open that file for edits.
+
+and a notes file for the current git bran
 
 ## Installation
 
@@ -20,7 +31,10 @@ In the future, expect a `$ playwright get notes` command to exist.
 
 ## Usage
 
-EXPLAIN USAGE HERE.
+This is literally the only command:
+```shell
+$ notes
+```
 
 ## Thanks!
 
